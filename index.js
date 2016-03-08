@@ -17,64 +17,33 @@ function toMatcherFunction(ignoreEntry) {
   }
 }
 
-function readdir(path, ignores, callback) {
-  if (typeof ignores == 'function') {
-    callback = ignores
-    ignores = []
-  }
-  ignores = ignores.map(toMatcherFunction)
-
-  var list = []
-
-  fs.readdir(path, function(err, files) {
-    if (err) {
-      return callback(err)
+function readdir(path, ignores) {
+    ignores = ignores || [];
+    ignores = ignores.map(toMatcherFunction);
+    
+    var list = [];
+    
+    var files = fs.readdirSync(path);
+    
+    if (!files.length) {
+        return list;
     }
-
-    var pending = files.length
-    if (!pending) {
-      // we are done, woop woop
-      return callback(null, list)
-    }
-
-    files.forEach(function(file) {
-      var filePath = p.join(path, file)
-      fs.stat(filePath, function(_err, stats) {
-        if (_err) {
-          return callback(_err)
+    
+    files.forEach(function (file) {
+        var filePath = p.join(path, file)
+        var stats = fs.statSync(filePath);
+        
+        if (ignores.some(function (matcher) { return matcher(filePath, stats) })) {
+            return;
         }
-
-        if (ignores.some(function(matcher) { return matcher(filePath, stats) })) {
-          pending -= 1
-          if (!pending) {
-            return callback(null, list)
-          }
-          return null
-        }
-
+        
         if (stats.isDirectory()) {
-          readdir(filePath, ignores, function(__err, res) {
-            if (__err) {
-              return callback(__err)
-            }
-
-            list = list.concat(res)
-            pending -= 1
-            if (!pending) {
-              return callback(null, list)
-            }
-          })
+            list = list.concat(readdir(filePath, ignores));
         } else {
-          list.push(filePath)
-          pending -= 1
-          if (!pending) {
-            return callback(null, list)
-          }
+            list.push(filePath)
         }
-
-      })
     })
-  })
+    return list;
 }
 
 module.exports = readdir

@@ -1,9 +1,9 @@
 # recursive-readdir
 
-[![Build Status](https://travis-ci.org/jergason/recursive-readdir.svg?branch=master)](https://travis-ci.org/jergason/recursive-readdir)
+This is a fork of https://github.com/jergason/recursive-readdir.
 
 A simple Node module for recursively listing all files in a directory,
-or in any subdirectories.
+or in any subdirectories synchronously.
 
 It does not list directories themselves.
 
@@ -12,18 +12,15 @@ on OS X and Linux, the order of files inside directories is [not guaranteed](htt
 
 ## Installation
 
-    npm install recursive-readdir
+    npm install recursive-readdir-synchronous
 
 ## Usage
 
 
 ```javascript
 var recursive = require('recursive-readdir');
-
-recursive('some/path', function (err, files) {
-  // Files is an array of filename
-  console.log(files);
-});
+// Files is an array of filename
+var files = recursive('some/path');
 ```
 
 It can also take a list of files to ignore.
@@ -32,10 +29,8 @@ It can also take a list of files to ignore.
 var recursive = require('recursive-readdir');
 
 // ignore files named 'foo.cs' or files that end in '.html'.
-recursive('some/path', ['foo.cs', '*.html'], function (err, files) {
-  // Files is an array of filename
-  console.log(files);
-});
+// Files is an array of filename
+var files = recursive('some/path', ['foo.cs', '*.html']);
 ```
 
 You can also pass functions which are called to determine whether or not to
@@ -51,10 +46,8 @@ function ignoreFunc(file, stats) {
 }
 
 // Ignore files named 'foo.cs' and descendants of directories named test
-recursive('some/path', ['foo.cs', ignoreFunc], function (err, files) {
-  // Files is an array of filename
-  console.log(files);
-});
+// Files is an array of filename
+var files = recursive('some/path', ['foo.cs', ignoreFunc]);
 ```
 
 The ignore strings support Glob syntax via
