@@ -14,7 +14,7 @@ on OS X and Linux, the order of files inside directories is [not guaranteed](htt
 
 
 ```javascript
-var recursive = require('recursive-readdir');
+var recursive = require('recursive-readdir-synchronous');
 // Files is an array of filename
 var files = recursive('some/path');
 ```
@@ -22,7 +22,7 @@ var files = recursive('some/path');
 It can also take a list of files to ignore.
 
 ```javascript
-var recursive = require('recursive-readdir');
+var recursive = require('recursive-readdir-synchronous');
 
 // ignore files named 'foo.cs' or files that end in '.html'.
 // Files is an array of filename
@@ -33,7 +33,7 @@ You can also pass functions which are called to determine whether or not to
 ignore a file:
 
 ```javascript
-var recursive = require('recursive-readdir');
+var recursive = require('recursive-readdir-synchronous');
 
 function ignoreFunc(file, stats) {
   // `file` is the absolute path to the file, and `stats` is an `fs.Stats`
