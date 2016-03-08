@@ -1,7 +1,3 @@
-# recursive-readdir
-
-This is a fork of https://github.com/jergason/recursive-readdir.
-
 A simple Node module for recursively listing all files in a directory,
 or in any subdirectories synchronously.
 
