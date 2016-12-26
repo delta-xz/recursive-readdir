@@ -3,7 +3,7 @@
   "name": "recursive-readdir-synchronous",
   "description": "Get an array of all files in a directory and subdirectories synchronously. This is a fork of https://github.com/jergason/recursive-readdir.",
   "license": "MIT",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/delta-xz/recursive-readdir"
@@ -17,10 +17,10 @@
     "lister"
   ],
   "engines": {
-    "node": ">=0.6.6"
+    "node": ">=0.10.0"
   },
   "dependencies": {
-    "minimatch": "^3.0.2"
+    "minimatch": "3.0.2"
   },
   "devDependencies": {
     "mocha": "1.14.0"
